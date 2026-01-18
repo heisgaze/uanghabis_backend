@@ -25,10 +25,10 @@ public class FinancialSetup {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "monthly_income")
+    @Column(name = "monthly_income", nullable = false, precision = 15, scale = 2)
     private BigDecimal monthlyIncome;
 
-    @Column(name = "fixed_expense")
+    @Column(name = "fixed_expense", nullable = false, precision = 15, scale = 2)
     private BigDecimal fixedExpense;
 
     @Column(name = "period_month")
