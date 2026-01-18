@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -29,4 +30,7 @@ public class Category {
 
     @Column(name = "is_default")
     private boolean isDefault;
+
+    @OneToMany(mappedBy = "category")
+    private List<Transaction> transactions;
 }
