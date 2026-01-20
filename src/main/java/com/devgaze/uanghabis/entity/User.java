@@ -40,4 +40,16 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<FinancialSetup> financialSetups;
+
+    @OneToMany(mappedBy = "user")
+    private List<Decision> decisions;
+
+    @OneToMany(mappedBy = "user")
+    private List<MonthlySummary> monthlySummaries;
+
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications;
+
+    @OneToMany(mappedBy = "user")
+    private List<Transaction> transactions;
 }
