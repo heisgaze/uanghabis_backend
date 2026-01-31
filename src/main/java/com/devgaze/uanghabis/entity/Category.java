@@ -26,7 +26,7 @@ public class Category {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
-    private CategoryType category;
+    private CategoryType type;
 
     @Column(name = "is_default")
     private boolean isDefault;
