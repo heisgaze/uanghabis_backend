@@ -42,7 +42,7 @@ public class MonthlySummary {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private SummaryType summaryType;
+    private SummaryType status;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
