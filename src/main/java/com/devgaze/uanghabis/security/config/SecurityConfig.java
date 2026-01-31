@@ -1,4 +1,4 @@
-package com.devgaze.uanghabis.config;
+package com.devgaze.uanghabis.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
