@@ -55,6 +55,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Transaction> transactions;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -62,7 +63,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return "";
+        return email;
     }
 
     @Override
