@@ -1,9 +1,10 @@
-package com.devgaze.uanghabis.services.auth;
+package com.devgaze.uanghabis.service.auth;
 
 import com.devgaze.uanghabis.dto.auth.LoginUserRequest;
 import com.devgaze.uanghabis.dto.auth.LoginUserResponse;
 import com.devgaze.uanghabis.dto.auth.RegisterUserRequest;
 import com.devgaze.uanghabis.dto.auth.RegisterUserResponse;
+import com.devgaze.uanghabis.entity.RefreshToken;
 import com.devgaze.uanghabis.entity.User;
 import com.devgaze.uanghabis.repository.UserRepository;
 import com.devgaze.uanghabis.security.jwt.JwtUtils;
@@ -20,15 +21,16 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
+    private final RefreshTokenService refreshTokenService;
 
     @Transactional
     public RegisterUserResponse register(RegisterUserRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("email already registered");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "email already registered");
         }
 
         if (userRepository.existsByName(request.getName())) {
-            throw new RuntimeException("username already registered");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "username already registered");
         }
 
         User user = User.builder()
@@ -59,14 +61,15 @@ public class AuthService {
             );
         }
 
-        String token = jwtUtils.generateToken(user);
+        refreshTokenService.deleteByUser(user);
+        String token = jwtUtils.generateAccessToken(user.getEmail());
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(request.getEmail());
 
         return LoginUserResponse.builder()
                 .token(token)
-                .expiresAt(jwtUtils.getExpirationTime())
+                .refreshToken(refreshToken.getToken())
+                .expiresAt(jwtUtils.getExpirationFromToken(token))
+                .refreshTokenExpiresAt(refreshToken.getExpiryDate())
                 .build();
-    }
-
-
     }
 }
