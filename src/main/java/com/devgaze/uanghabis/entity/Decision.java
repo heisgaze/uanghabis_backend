@@ -32,7 +32,7 @@ public class Decision {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "recommendation", nullable = false)
-    private DecisionType decisionType;
+    private DecisionType recommendation;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
